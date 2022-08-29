@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +24,10 @@ class CounterFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var count: Int = 0
+    lateinit var fragmentCountButton: Button
+    lateinit var fragmentCountResult: TextView
+    private val countViewModel: CountViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,5 +63,20 @@ class CounterFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fragmentCountButton = view.findViewById(R.id.fragment_count_button)
+        fragmentCountResult = view.findViewById(R.id.fragment_count_result)
+
+        fragmentCountResult.text = countViewModel.getCount().value.toString()
+
+        fragmentCountButton.setOnClickListener {
+            count++
+            countViewModel.setCount(count)
+            fragmentCountResult.text = count.toString()
+        }
     }
 }
