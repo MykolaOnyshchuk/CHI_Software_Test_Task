@@ -11,4 +11,5 @@
     <string name="user_details">User details</string>
     <string name="zero_years">0 years</string>
     <string name="age">Age</string>
+    <string name="close">Close</string>
 </resources>
