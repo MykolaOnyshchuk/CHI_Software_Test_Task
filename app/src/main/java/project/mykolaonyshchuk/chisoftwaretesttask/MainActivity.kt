@@ -3,11 +3,13 @@ package project.mykolaonyshchuk.chisoftwaretesttask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
-    lateinit var users: ArrayList<User>
+class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
+    private lateinit var users: ArrayList<User>
     private lateinit var userRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,20 +18,45 @@ class MainActivity : AppCompatActivity() {
 
         userRecyclerView = findViewById(R.id.user_recycler_view)
 
-        users = ArrayList()
-        users.add(User("Andrew", 20, true))
-        users.add(User("Mary", 23, false))
-        users.add(User("Kate", 33, false))
-        users.add(User("Alex", 24, true))
-        users.add(User("Victoria", 19, false))
-        users.add(User("John", 22, true))
-        users.add(User("Jessica", 25, true))
+        val spHelper = SharedPreferencesHelper()
+        val spUsers = spHelper.getArrayListOfUsers(this)
 
-        val adapter = UsersAdapter(users)
+        if (spUsers == null) {
+            users = ArrayList()
+            users.add(User("Andrew", 20, true))
+            users.add(User("Mary", 23, false))
+            users.add(User("Kate", 33, false))
+            users.add(User("Alex", 24, true))
+            users.add(User("Victoria", 19, false))
+            users.add(User("John", 22, true))
+            users.add(User("Jessica", 25, true))
+        } else {
+            users = spUsers
+        }
+
+        val adapter = UsersAdapter(users, this)
         Log.d("Number of objects", adapter.itemCount.toString())
 
         userRecyclerView.adapter = adapter
-
         userRecyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val spHelper = SharedPreferencesHelper()
+        spHelper.saveArrayListOfUsers(users, this)
+    }
+
+    override fun onUserClick(position: Int) {
+
+        val bundle = Bundle()
+        bundle.putParcelable("user", users[position])
+        val detailsFragment = UserDetailsFragment()
+        detailsFragment.arguments = bundle
+        val fm: FragmentManager = supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.replace(R.id.fragment_container, detailsFragment).addToBackStack(null).commit()
+
+        Toast.makeText(this, position.toString(), Toast.LENGTH_SHORT).show()
     }
 }

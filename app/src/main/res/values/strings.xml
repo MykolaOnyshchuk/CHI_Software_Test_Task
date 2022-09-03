@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Level 2</string>
     <string name="name">Name</string>
-    <string name="is_student">Is student</string>
+    <string name="is_a_student">Is a student</string>
+    <string name="is_not_a_student">Is not a student</string>
     <string name="default_age">0 years</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_data">No data</string>
+    <string name="a_button_to_close_user_description_window">A button to close user description window</string>
+    <string name="user_details">User details</string>
+    <string name="zero_years">0 years</string>
+    <string name="age">Age</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_view_item"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/name"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/age"
@@ -26,7 +28,9 @@
         android:id="@+id/isStudentSwitch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
+        android:checked="false"
         android:minHeight="48dp"
-        android:text="@string/is_student" />
+        android:text="@string/is_a_student"
+        android:textColor="#808080" />
 </LinearLayout>
