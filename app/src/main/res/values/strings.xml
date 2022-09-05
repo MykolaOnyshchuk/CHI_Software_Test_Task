@@ -12,4 +12,9 @@
     <string name="zero_years">0 years</string>
     <string name="age">Age</string>
     <string name="close">Close</string>
+    <string name="add_a_new_user">Add a new user</string>
+    <string name="type_new_user_s_name_in">Type new user\'s name in</string>
+    <string name="type_user_s_name_in">Type user\'s name in</string>
+    <string name="type_user_s_age_in">Type user\'s age in</string>
+    <string name="add_user">Add user</string>
 </resources>

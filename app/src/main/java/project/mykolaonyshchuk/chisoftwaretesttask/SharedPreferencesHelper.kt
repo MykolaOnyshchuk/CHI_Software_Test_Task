@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 class SharedPreferencesHelper {
     private val gson = Gson()
 
-    fun saveArrayListOfUsers(usersArr: ArrayList<User>, context: Context) {
+    fun saveArrayListOfUsers(usersArr: ArrayList<User>?, context: Context) {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences("shared preferences", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -17,7 +17,7 @@ class SharedPreferencesHelper {
         editor.putString("users", usersJSON).apply()
     }
 
-    fun getArrayListOfUsers(context: Context): ArrayList<User>? {
+    fun getArrayListOfUsers(context: Context): ArrayList<User> {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences("shared preferences", Context.MODE_PRIVATE)
         val usersJSON = sharedPreferences.getString("users", null)

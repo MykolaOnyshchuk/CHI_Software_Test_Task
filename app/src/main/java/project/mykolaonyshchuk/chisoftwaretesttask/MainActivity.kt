@@ -3,19 +3,22 @@ package project.mykolaonyshchuk.chisoftwaretesttask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.widget.Button
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
-    private lateinit var users: ArrayList<User>
+    private lateinit var addUserButton: MaterialButton
+    lateinit var users: ArrayList<User>
     private lateinit var userRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        addUserButton = findViewById(R.id.add_user_button)
         userRecyclerView = findViewById(R.id.user_recycler_view)
 
         val spHelper = SharedPreferencesHelper()
@@ -39,6 +42,13 @@ class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
 
         userRecyclerView.adapter = adapter
         userRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        addUserButton.setOnClickListener {
+            val addUserFragment = AddUserFragment()
+            val fm: FragmentManager = supportFragmentManager
+            val ft = fm.beginTransaction()
+            ft.replace(R.id.fragment_container, addUserFragment).addToBackStack(null).commit()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -56,7 +66,5 @@ class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
         val fm: FragmentManager = supportFragmentManager
         val ft = fm.beginTransaction()
         ft.replace(R.id.fragment_container, detailsFragment).addToBackStack(null).commit()
-
-        Toast.makeText(this, position.toString(), Toast.LENGTH_SHORT).show()
     }
 }
