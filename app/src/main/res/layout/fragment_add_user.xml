@@ -104,6 +104,8 @@
         android:layout_gravity="center_horizontal"
         android:textSize="20sp"
         android:layout_marginTop="20dp"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
         android:text="@string/no_data"/>
 
     <com.google.android.material.button.MaterialButton

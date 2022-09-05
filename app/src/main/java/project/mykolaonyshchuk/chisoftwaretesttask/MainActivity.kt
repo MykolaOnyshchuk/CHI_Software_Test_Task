@@ -1,9 +1,11 @@
 package project.mykolaonyshchuk.chisoftwaretesttask
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toolbar
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +13,10 @@ import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
     private lateinit var addUserButton: MaterialButton
-    lateinit var users: ArrayList<User>
     private lateinit var userRecyclerView: RecyclerView
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    lateinit var users: ArrayList<User>
+    lateinit var adapter: UsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,9 @@ class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
 
         addUserButton = findViewById(R.id.add_user_button)
         userRecyclerView = findViewById(R.id.user_recycler_view)
+        toolbar = findViewById(R.id.toolbar)
+
+        //setSupportActionBar(toolbar)
 
         val spHelper = SharedPreferencesHelper()
         val spUsers = spHelper.getArrayListOfUsers(this)
@@ -37,7 +44,7 @@ class MainActivity : AppCompatActivity(), UsersAdapter.UserOnClickListener {
             users = spUsers
         }
 
-        val adapter = UsersAdapter(users, this)
+        adapter = UsersAdapter(users, this)
         Log.d("Number of objects", adapter.itemCount.toString())
 
         userRecyclerView.adapter = adapter

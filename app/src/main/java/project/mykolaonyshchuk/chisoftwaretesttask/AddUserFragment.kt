@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.google.android.material.button.MaterialButton
 import java.time.LocalDateTime
 
@@ -69,11 +66,17 @@ class AddUserFragment : Fragment() {
             ageCheck--
         }
 
+        addUserDatePicker.descendantFocusability = DatePicker.FOCUS_BLOCK_DESCENDANTS
+
         addUserFragmentCloseButton.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
         addUserFragmentAddUserButton.setOnClickListener {
+            var ageCheck = LocalDateTime.now().year - addUserDatePicker.year
+            if(LocalDateTime.now().monthValue * 31 + LocalDateTime.now().dayOfMonth < addUserDatePicker.month * 31 + addUserDatePicker.dayOfMonth) {
+                ageCheck--
+            }
             if(nameAddUserTextEdit.text.toString() == "" || ageAddUserTextEdit.text.toString() == "") {
                 Toast.makeText(activity, "You need to fill all the fields", Toast.LENGTH_LONG).show()
             } else if(ageCheck != ageAddUserTextEdit.text.toString().toInt()) {
@@ -84,9 +87,12 @@ class AddUserFragment : Fragment() {
                 val spHelper = SharedPreferencesHelper()
                 val users = (this.activity as MainActivity?)?.users
                 if (users != null) {
-                    users.add(User(nameAddUserTextEdit.text.toString(), ageAddUserTextEdit.toString().toInt(), false))
+                    users.add(User(nameAddUserTextEdit.text.toString(), ageAddUserTextEdit.text.toString().toInt(), false))
                 }
                 activity?.let { it1 -> spHelper.saveArrayListOfUsers(users, it1.baseContext) }
+                if (users != null) {
+                    (this.activity as MainActivity).adapter.notifyItemInserted(users.size - 1)
+                }
             }
 
         }
